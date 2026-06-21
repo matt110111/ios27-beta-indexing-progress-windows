@@ -15,7 +15,7 @@
 
 [下载 ZIP 包（腾讯微云）](https://share.weiyun.com/H5B7bCUz)
 
-## 使用方法
+## 使用方法（Windows）
 
 1. 下载并解压 `iOS_Indexing_Checker_Windows_NoPython.zip`。
 2. 用 USB 线连接 iPhone。
@@ -25,6 +25,19 @@
 6. 双击 `Start-iOS-Indexing-Checker.cmd`。
 7. 选择 English 或中文。
 8. 按窗口提示按 Enter。
+
+## 使用方法（macOS）
+
+macOS 通过系统内置的 `usbmuxd` 与 iPhone 通信，因此不需要安装 iTunes 或 Apple Devices。但需要 Python 3.10 或更新版本（可用 `brew install python`，或到 [python.org](https://www.python.org/downloads/macos/) 安装；命令行工具自带的 Python 3.9 版本过旧）。
+
+1. 用 USB 线连接 iPhone。
+2. 解锁 iPhone，如果弹出提示就点“信任此电脑”。
+3. 在 iPhone 上打开“设置”App。
+4. 双击 `scripts/Start-iOS-Indexing-Checker.command`。
+5. 选择 English 或中文。
+6. 按 Terminal 窗口提示按 Enter。
+
+更多 macOS 说明（包括首次运行时的 Gatekeeper 提示）见 [docs/MAC_USER_GUIDE.md](docs/MAC_USER_GUIDE.md)。
 
 正常情况下会看到：
 
@@ -36,12 +49,13 @@ iOS Indexing Progress：85%
 
 ## 设备要求
 
-- Windows 10 或 Windows 11。
+- Windows 10 / 11，或 macOS 12 及以上。
 - 一台运行 iOS 27 beta (iPadOS 27 Beta)的 iPhone (iPad)。
 - 一根支持数据传输的 USB 线。
-- 如果这台电脑以前从没连过 iPhone，请先安装 Apple Devices 或 iTunes。
+- **Windows：** 如果这台电脑以前从没连过 iPhone，请先安装 Apple Devices 或 iTunes。
+- **macOS：** 需要 Python 3.10+（`brew install python` 或 python.org），无需安装 iTunes / Apple Devices。
 
-如果 Windows 的文件资源管理器、Apple Devices 或 iTunes 都识别不到这台 iPhone，此软件也无法识别。
+如果电脑本身识别不到这台 iPhone（Windows 上的文件资源管理器 / Apple Devices / iTunes，或 macOS 上的访达），此软件也无法识别。
 
 ## 如果看起来没反应
 

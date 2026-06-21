@@ -5,7 +5,7 @@
 
 # iOS 27 Beta Indexing Progress Checker for Windows
 
-A simple Windows tool for iOS 27 devices with "Indexing in Progress" in Settings but does not show a percentage.
+A simple tool for iOS 27 devices that show "Indexing in Progress" in Settings but do not show a percentage. It runs on **Windows** and **macOS**.
 
 Connect your iPhone over USB, run the tool, and it will show the latest indexing percentage reported by the phone.
 
@@ -15,7 +15,7 @@ Connect your iPhone over USB, run the tool, and it will show the latest indexing
 
 [Download ZIP (Tencent Weiyun)](https://share.weiyun.com/H5B7bCUz)
 
-## How To Use
+## How To Use (Windows)
 
 1. Download and unzip `iOS_Indexing_Checker_Windows_NoPython.zip`.
 2. Connect your iPhone with a USB cable.
@@ -25,6 +25,23 @@ Connect your iPhone over USB, run the tool, and it will show the latest indexing
 6. Double-click `Start-iOS-Indexing-Checker.cmd`.
 7. Choose English or Chinese.
 8. Press Enter in the tool window when prompted.
+
+## How To Use (macOS)
+
+macOS talks to the iPhone through the built-in `usbmuxd`, so iTunes or the
+Apple Devices app is not required. You do need Python 3.10+ (install with
+`brew install python` or from [python.org](https://www.python.org/downloads/macos/);
+the Command Line Tools' built-in Python 3.9 is too old).
+
+1. Connect your iPhone with a USB cable.
+2. Unlock the iPhone, and tap "Trust This Computer" if asked.
+3. Open the Settings app on the iPhone.
+4. Double-click `scripts/Start-iOS-Indexing-Checker.command`.
+5. Choose English or Chinese.
+6. Press Enter in the Terminal window when prompted.
+
+See [docs/MAC_USER_GUIDE.md](docs/MAC_USER_GUIDE.md) for full macOS notes,
+including the first-run Gatekeeper prompt.
 
 When it works, you will see a line like this:
 
@@ -36,12 +53,13 @@ If a percentage does not appear immediately, leave the iPhone unlocked and wait 
 
 ## Requirements
 
-- Windows 10 or Windows 11.
+- Windows 10 / 11, or macOS 12 or newer.
 - An iPhone/iPad running iOS 27 beta (iPadOS 27 Beta).
 - A USB cable that supports data transfer.
-- Apple Devices or iTunes installed if this PC has never connected to an iPhone before.
+- **Windows:** Apple Devices or iTunes installed if this PC has never connected to an iPhone before.
+- **macOS:** Python 3.10+ (`brew install python` or python.org). No iTunes/Apple Devices needed.
 
-If you can't see your devices on File Explorer, Apple Devices, or iTunes, this tool will not be able to see it either.
+If the computer can't see the iPhone (File Explorer / Apple Devices / iTunes on Windows, or Finder on macOS), this tool will not be able to see it either.
 
 ## If It Seems Stuck
 
