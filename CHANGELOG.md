@@ -1,5 +1,11 @@
 # 更新日志
 
+## 0.2.0 - 2026-06-21
+
+- 新增 macOS 支持：提供可双击的 `scripts/Start-iOS-Indexing-Checker.command` 一键启动器（双语 UI）。
+- macOS 启动器在本地创建 venv 并安装 `pymobiledevice3`，通过系统 `usbmuxd` 连接 iPhone，无需 iTunes / Apple Devices。
+- 新增 `docs/MAC_USER_GUIDE.md`，README（中英文）同步增加 macOS 使用说明与设备要求。
+
 ## 0.1.1 - 2026-06-17
 
 - 增加英语 UI：打开工具后可先选择 English 或中文。

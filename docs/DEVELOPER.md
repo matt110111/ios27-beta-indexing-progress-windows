@@ -3,13 +3,27 @@
 ## 项目结构
 
 ```text
-src/IosIndexingProgress.py                 核心读取程序
-scripts/Start-iOS-Indexing-Checker.cmd     用户双击入口
-scripts/Start-iOS-Indexing-Checker.ps1     一键启动器
-scripts/Build-NoPython-Package.ps1         维护者打包脚本
-packaging/README_OneClick_Distribution.txt 离线包内说明
-dist/*.zip                                 面向用户的离线包
-tests/sample-indexing-syslog.txt           解析测试样例
+src/IosIndexingProgress.py                     核心读取程序（跨平台）
+scripts/Start-iOS-Indexing-Checker.cmd         Windows 用户双击入口
+scripts/Start-iOS-Indexing-Checker.ps1         Windows 一键启动器
+scripts/Start-iOS-Indexing-Checker.command     macOS 用户双击入口（一键启动器）
+scripts/Build-NoPython-Package.ps1             维护者打包脚本
+packaging/README_OneClick_Distribution.txt     离线包内说明
+dist/*.zip                                     面向用户的离线包
+docs/MAC_USER_GUIDE.md                         macOS 使用说明
+tests/sample-indexing-syslog.txt               解析测试样例
+```
+
+## macOS
+
+核心程序 `src/IosIndexingProgress.py` 本身跨平台，唯一的 Windows 专属代码（`WindowsSelectorEventLoopPolicy`）已用 `sys.platform == "win32"` 守卫。
+
+macOS 通过系统内置 `usbmuxd` 连接 iPhone，不需要 iTunes / Apple Devices。`scripts/Start-iOS-Indexing-Checker.command` 是 bash 一键启动器：它在脚本同目录创建本地 venv（`.ios-indexing-runtime/`），安装 `pymobiledevice3`，再运行核心程序。
+
+本地测试：
+
+```bash
+NO_PROMPT=1 RAW=1 DURATION_SECONDS=20 bash scripts/Start-iOS-Indexing-Checker.command
 ```
 
 ## 技术路线
