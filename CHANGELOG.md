@@ -1,5 +1,11 @@
 # 更新日志
 
+## 0.2.1 - 2026-06-21
+
+- 修复 macOS 启动器在系统自带 Python 3.9（命令行工具）下安装 `pymobiledevice3` 失败的问题：现在要求 Python 3.10+，优先选择更新的解释器，并自动重建用旧版本创建的 venv。
+- 启动器设置 `PYTHONUTF8` / `PYTHONIOENCODING`，避免 pip 字节码编译阶段因 stdout 无编码而崩溃（双击启动时常见）。
+- 文档与 README 同步将 macOS 要求更新为 Python 3.10+，并新增对应排查说明。
+
 ## 0.2.0 - 2026-06-21
 
 - 新增 macOS 支持：提供可双击的 `scripts/Start-iOS-Indexing-Checker.command` 一键启动器（双语 UI）。

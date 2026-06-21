@@ -13,11 +13,11 @@ self-contained Python environment in this folder the first time you run it.
 - macOS 12 or newer.
 - An iPhone/iPad running iOS 27 beta (iPadOS 27 Beta).
 - A USB cable that supports data transfer.
-- Python 3.9 or newer. macOS does not ship Python by default; install it with
+- Python 3.10 or newer. macOS does not ship Python by default; install it with
   [Homebrew](https://brew.sh) (`brew install python`) or from
-  [python.org](https://www.python.org/downloads/macos/). Installing the Xcode
-  Command Line Tools (`xcode-select --install`) also provides a usable
-  `python3`.
+  [python.org](https://www.python.org/downloads/macos/). **Note:** the Python
+  3.9 bundled with the Xcode Command Line Tools is too old — `pymobiledevice3`
+  needs 3.10+.
 
 ## How To Use
 
@@ -50,6 +50,21 @@ If double-clicking does nothing, you can also run it from Terminal:
 chmod +x Start-iOS-Indexing-Checker.command
 ./Start-iOS-Indexing-Checker.command
 ```
+
+## "The iPhone log reader component could not be installed"
+
+If setup fails with a `SyntaxError` mentioning `match` and a path containing
+`.../Python3.framework/Versions/3.9/...`, the launcher is using the Command
+Line Tools' Python 3.9, which is too old. Install Python 3.10+ and remove the
+half-built environment so it rebuilds:
+
+```bash
+brew install python          # or install from python.org
+rm -rf .ios-indexing-runtime  # run this in the folder with the launcher
+```
+
+Then double-click the launcher again. Newer versions of the launcher skip
+Python 3.9 automatically and rebuild a stale environment for you.
 
 ## If It Seems Stuck
 

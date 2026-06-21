@@ -67,8 +67,8 @@ t() {
         zh:prep3) echo "3. 在 iPhone 上打开 设置" ;;
         en:ready) echo "Press Enter when ready" ;;
         zh:ready) echo "准备好后按 Enter 开始" ;;
-        en:noPython) echo "Python 3.9+ was not found. Install it with 'brew install python' or from python.org, then run this tool again." ;;
-        zh:noPython) echo "没有找到 Python 3.9+。请用 'brew install python' 或到 python.org 安装后，重新运行本工具。" ;;
+        en:noPython) echo "Python 3.10+ was not found (the Command Line Tools' Python 3.9 is too old). Install it with 'brew install python' or from python.org, then run this tool again." ;;
+        zh:noPython) echo "没有找到 Python 3.10+（命令行工具自带的 Python 3.9 版本过旧）。请用 'brew install python' 或到 python.org 安装后，重新运行本工具。" ;;
         en:createRuntime) echo "Creating local Python runtime ($arg)..." ;;
         zh:createRuntime) echo "正在创建本地运行环境 Python（$arg）..." ;;
         en:createRuntimeFailed) echo "Could not create the local runtime." ;;
@@ -125,16 +125,25 @@ select_language() {
 # --- Python discovery and runtime --------------------------------------------
 
 find_python() {
-    local probe='import sys; sys.exit(0 if sys.version_info[:2] >= (3, 9) else 1)'
-    for cmd in python3 python; do
+    # pymobiledevice3 and its dependencies use 3.10+ syntax (the `match`
+    # statement), so the Command Line Tools' Python 3.9 cannot build them.
+    # Prefer the newest interpreter we can find.
+    local probe='import sys; sys.exit(0 if sys.version_info[:2] >= (3, 10) else 1)'
+    local cmd
+    for cmd in python3.13 python3.12 python3.11 python3.10 \
+               /opt/homebrew/bin/python3 /usr/local/bin/python3 python3 python; do
         if command -v "$cmd" >/dev/null 2>&1; then
             if "$cmd" -c "$probe" >/dev/null 2>&1; then
-                echo "$cmd"
+                command -v "$cmd"
                 return 0
             fi
         fi
     done
     return 1
+}
+
+is_supported_python() {
+    "$1" -c 'import sys; sys.exit(0 if sys.version_info[:2] >= (3, 10) else 1)' >/dev/null 2>&1
 }
 
 has_pymobiledevice3() {
@@ -152,6 +161,12 @@ ensure_runtime() {
         return 1
     fi
 
+    # An existing venv built on an unsupported Python (e.g. the CLT 3.9) can
+    # never install pymobiledevice3. Rebuild it from scratch.
+    if [ -x "$VENV_PY" ] && ! is_supported_python "$VENV_PY"; then
+        rm -rf "$VENV_PATH"
+    fi
+
     if [ ! -x "$VENV_PY" ]; then
         local version
         version="$("$host_python" -c 'import sys; print("%d.%d" % sys.version_info[:2])' 2>/dev/null)"
@@ -162,6 +177,12 @@ ensure_runtime() {
             return 1
         fi
     fi
+
+    # Force UTF-8 so pip's byte-compile step cannot crash with
+    # "encode() argument 'encoding' must be str, not None" when the launcher
+    # is started by double-click and sys.stdout has no encoding.
+    export PYTHONUTF8=1
+    export PYTHONIOENCODING=utf-8
 
     step "$(t installComponent)"
     "$VENV_PY" -m pip install --upgrade pip >/dev/null 2>&1

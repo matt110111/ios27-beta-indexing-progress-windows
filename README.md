@@ -29,8 +29,9 @@ Connect your iPhone over USB, run the tool, and it will show the latest indexing
 ## How To Use (macOS)
 
 macOS talks to the iPhone through the built-in `usbmuxd`, so iTunes or the
-Apple Devices app is not required. You do need Python 3.9+ (install with
-`brew install python` or from [python.org](https://www.python.org/downloads/macos/)).
+Apple Devices app is not required. You do need Python 3.10+ (install with
+`brew install python` or from [python.org](https://www.python.org/downloads/macos/);
+the Command Line Tools' built-in Python 3.9 is too old).
 
 1. Connect your iPhone with a USB cable.
 2. Unlock the iPhone, and tap "Trust This Computer" if asked.
@@ -56,7 +57,7 @@ If a percentage does not appear immediately, leave the iPhone unlocked and wait 
 - An iPhone/iPad running iOS 27 beta (iPadOS 27 Beta).
 - A USB cable that supports data transfer.
 - **Windows:** Apple Devices or iTunes installed if this PC has never connected to an iPhone before.
-- **macOS:** Python 3.9+ (`brew install python` or python.org). No iTunes/Apple Devices needed.
+- **macOS:** Python 3.10+ (`brew install python` or python.org). No iTunes/Apple Devices needed.
 
 If the computer can't see the iPhone (File Explorer / Apple Devices / iTunes on Windows, or Finder on macOS), this tool will not be able to see it either.
 
